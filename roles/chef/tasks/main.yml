@@ -1,0 +1,19 @@
+---
+- name: Install Chef
+  sudo: yes
+  apt: name=chef state=present update_cache=yes
+
+- name: Create the Chef config directory.
+  sudo: yes
+  file: path=/etc/chef state=directory
+
+- name: Copy the data bag secret into place.
+  sudo: yes
+  s3: >
+    aws_access_key={{ aws_access_key }}
+    aws_secret_key={{ aws_secret_key }}
+    bucket={{ s3_bucket }}
+    object=/chef/encrypted_data_bag_secret
+    dest=/etc/chef/encrypted_data_bag_secret
+    overwrite=no
+    mode=get

@@ -1,0 +1,14 @@
+---
+- name: Add the Apt repo.
+  sudo: yes
+  apt_repository: >
+    repo='deb http://downloads.hipchat.com/linux/apt stable main'
+    state=present
+
+- name: Add the Apt signing key.
+  sudo: yes
+  apt_key: url='https://www.hipchat.com/keys/hipchat-linux.key' state=present
+
+- name: Ensure HipChat is installed.
+  sudo: yes
+  apt: name=hipchat state=present update_cache=yes

@@ -1,0 +1,10 @@
+---
+- name: Make sure RVM is installed.
+  shell: "curl -sSL https://get.rvm.io | bash"
+
+- name: Fetch each ruby version.
+  shell: rvm install {{ item }}
+  with_items: ruby_versions
+
+- name: Set the default ruby version.
+  shell: rvm use {{ default_ruby_version }} --default

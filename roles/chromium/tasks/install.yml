@@ -1,0 +1,4 @@
+---
+- name: Make sure Chromium is installed.
+  sudo: yes
+  apt: name=chromium-browser state=present update_cache=yes

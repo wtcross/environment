@@ -1,0 +1,54 @@
+ZSH_THEME="{{ theme }}"
+
+export ZSH=$HOME/.oh-my-zsh
+export UPDATE_ZSH_DAYS={{ update_zsh_days }}
+
+{% if case_sensitive %}CASE_SENSITIVE="true"{% endif %}
+{% if disable_auto_update %}DISABLE_AUTO_UPDATE="true"{% endif %}
+{% if disable_ls_colors %}DISABLE_LS_COLORS="true"{% endif %}
+{% if disable_auto_title %}DISABLE_AUTO_TITLE="true"{% endif %}
+{% if enable_correction %}ENABLE_CORRECTION="true"{% endif %}
+{% if completion_waiting_dots %}COMPLETION_WAITING_DOTS="true"{% endif %}
+
+{% if disable_untracked_files_dirty %}
+# Disable marking untracked files under VCS as dirty. This makes
+# repository status check for large repositories much, much faster.
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+{% endif %}
+
+# Change the command execution time stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+HIST_STAMPS="{{ hist_stamps }}"
+
+plugins=({{ plugins | join(' ') }})
+
+source $ZSH/oh-my-zsh.sh
+
+######################
+# User configuration #
+######################
+{% if private_keys | length > 0 %}
+# Tell ssh-agent plugin to load all private keys
+zstyle :omz:plugins:ssh-agent identities {{ private_keys | join(' ') }}
+{% endif %}
+
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+export LANG={{ lang }}
+
+export CHROME_BIN=$(which chromium-browser)
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='subl'
+fi
+
+{% if aliases | length > 0 %}# Aliases{% endif %}
+{% for alias in aliases %}
+alias {{ alias }}
+{% endfor %}
+
+source ~/.rvm/scripts/rvm
+source ~/.environment.sh

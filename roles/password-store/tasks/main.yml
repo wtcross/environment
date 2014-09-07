@@ -1,0 +1,9 @@
+---
+- name: Install the pass utility.
+  sudo: yes
+  apt: name=pass state=present update_cache=yes
+
+- name: Ensure my password-store repo is checked out.
+  git: repo={{ pass_git_repo }}
+       dest={{ pass_directory }}
+       depth=1

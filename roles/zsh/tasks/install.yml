@@ -1,0 +1,9 @@
+---
+- name: Ensure zsh is installed.
+  sudo: yes
+  apt: name=zsh state=present update_cache=yes
+
+- name: Ensure the oh-my-zsh repo is cloned into ~/.oh-my-zsh
+  git: repo=git@github.com:robbyrussell/oh-my-zsh.git
+       dest=~/.oh-my-zsh
+       depth=1

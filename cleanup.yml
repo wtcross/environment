@@ -1,0 +1,10 @@
+---
+- name: Clean up secret files on control host.
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  sudo: no
+
+  tasks:
+    - name: Ensure secure variable file is deleted.
+      file: path=vars/secure.yml state=absent

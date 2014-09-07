@@ -1,0 +1,34 @@
+---
+- include: bootstrap.yml
+- include: secure-variables.yml
+
+- name: Set up a fresh environment
+  hosts: targets
+  sudo: no
+
+  vars_files:
+    - vars/aws.yml
+
+  pre_tasks:
+    - name: Load secure variables from S3.
+      include_vars: vars/secure.yml
+
+    - name: Check to see if X is installed.
+      shell: which X
+      register: which_x
+
+  roles:
+    - role: zsh
+    - role: rvm
+    - role: node
+    - role: chef
+    - role: password-store
+
+    - role: chromium
+      when: which_x.rc == 0
+    - role: sublime
+      when: which_x.rc == 0
+    - role: hipchat
+      when: which_x.rc == 0
+
+- include: cleanup.yml

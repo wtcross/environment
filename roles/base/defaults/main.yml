@@ -1,0 +1,10 @@
+---
+user_groups:
+  - sudo
+  - adm
+  - cdrom
+  - audio
+  - dip
+  - plugdev
+  - lpadmin
+  - sambashare

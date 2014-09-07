@@ -1,0 +1,12 @@
+---
+- name: Bootstrap the control machine.
+  hosts: localhost
+  connection: local
+  sudo: yes
+
+  vars_files:
+    - vars/aws.yml
+
+  tasks:
+    - name: Ensure that boto is installed to work with AWS
+      pip: name=boto state=present

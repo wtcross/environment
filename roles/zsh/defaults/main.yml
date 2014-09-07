@@ -1,0 +1,32 @@
+---
+theme: bira
+
+case_sensitive: no
+
+disable_auto_update: no
+
+update_zsh_days: 13
+
+disable_ls_colors: no
+
+disable_auto_title: no
+
+enable_correction: no
+
+completion_waiting_dots: no
+
+disable_untracked_files_dirty: no
+
+hist_stamps: mm/dd/yyyy
+
+plugins:
+  - git
+  - pass
+  - sublime
+  - ssh-agent
+  - gpg-agent
+  - rvm
+
+lang: en_US.UTF-8
+
+aliases: []

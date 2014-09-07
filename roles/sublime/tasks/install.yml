@@ -1,0 +1,8 @@
+---
+- name: Ensure the Sublime Text APT repo is present.
+  sudo: yes
+  apt_repository: repo='ppa:webupd8team/sublime-text-3' state=present
+
+- name: Ensure Sublime Text is installed.
+  sudo: yes
+  apt: name=sublime-text-installer update_cache=yes state=present
