@@ -1,3 +1,2 @@
 ---
-pass_git_repo: git@github.com:wtcross/pass.git
 pass_directory: ~/.password-store

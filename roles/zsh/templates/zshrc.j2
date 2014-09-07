@@ -38,12 +38,7 @@ export LANG={{ lang }}
 
 export CHROME_BIN=$(which chromium-browser)
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='subl'
-fi
+export EDITOR='vim'
 
 {% if aliases | length > 0 %}# Aliases{% endif %}
 {% for alias in aliases %}

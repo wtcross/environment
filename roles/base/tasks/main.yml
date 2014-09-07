@@ -24,11 +24,5 @@
   sudo: yes
   ufw: policy=deny state=enabled
 
-- name: Make sure the target user is in the correct groups.
-  user: >
-    name={{ ansible_ssh_user }}
-    group={{ ansible_ssh_user }}
-    groups={{ user_groups | join(',') }}
-
 - name: Run the fix Ubuntu script.
   shell: wget -q -O - https://fixubuntu.com/fixubuntu.sh | bash
