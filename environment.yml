@@ -15,30 +15,25 @@
 
   roles:
     - role: zsh
-      tags: [ 'zsh' ]
 
     - role: git
-      tags: [ 'git' ]
 
     - role: rvm
-      tags: [ 'rvm' ]
 
     - role: node
-      tags: [ 'node' ]
 
     - role: chef
-      tags: [ 'chef' ]
 
     - role: password-store
-      tags: [ 'password-store' ]
+      tags: [ 'private' ]
 
     - role: chromium
-      tags: [ 'chromium' ]
+      tags: [ 'gui' ]
 
     - role: sublime
-      tags: [ 'sublime' ]
+      tags: [ 'gui' ]
 
     - role: hipchat
-      tags: [ 'hipchat' ]
+      tags: [ 'gui' ]
 
 - include: cleanup.yml
