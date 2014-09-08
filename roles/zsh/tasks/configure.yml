@@ -9,7 +9,7 @@
     bucket={{ s3_bucket }}
     object=/scripts/environment.sh
     dest=~/.environment.sh
-    overwrite=no
+    overwrite=yes
     mode=get
 
 - name: Get path to ZSH
