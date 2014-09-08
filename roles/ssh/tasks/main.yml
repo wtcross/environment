@@ -7,32 +7,43 @@
     aws_access_key={{ aws_access_key }}
     aws_secret_key={{ aws_secret_key }}
     bucket={{ s3_bucket }}
-    object=/ssh/{{ item }}
-    dest=~/.ssh/{{ item }}
+    object=/ssh/{{ item.name }}
+    dest=~/.ssh/{{ item.name }}
     overwrite=no
     mode=get
-  with_items: private_keys
+  when: item.type == 'private'
+  with_items: ssh_keys
 
 - name: Ensure private keys in the .ssh directory have the correct permissions.
-  file: path=~/.ssh/{{ item }} owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} mode=600
-  with_items: private_keys
+  file: path=~/.ssh/{{ item.name }} owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} mode=600
+  when: item.type == 'private'
+  with_items: ssh_keys
 
 - name: Ensure public keys in S3 are present.
   s3: >
     aws_access_key={{ aws_access_key }}
     aws_secret_key={{ aws_secret_key }}
     bucket={{ s3_bucket }}
-    object=/ssh/{{ item }}
-    dest=~/.ssh/{{ item }}
+    object=/ssh/{{ item.name }}
+    dest=~/.ssh/{{ item.name }}
     overwrite=no
     mode=get
-  with_items: public_keys
+  when: item.type == 'public'
+  with_items: ssh_keys
 
 - name: Ensure public keys in the .ssh directory have the correct permissions.
-  file: path=~/.ssh/{{ item }} owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} mode=644
-  with_items: public_keys
+  file: path=~/.ssh/{{ item.name }} owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} mode=644
+  when: item.type == 'public'
+  with_items: ssh_keys
 
 - name: Ensure SSH config file is in place.
   copy: >
     src=config
     dest=~/.ssh
+
+- name: Add authorized_keys.
+  authorized_key: >
+    user="{{ ansible_ssh_user }}"
+    key="{{ lookup('file', '/home/' + ansible_ssh_user + '/.ssh/' + item.name) }}"
+  when: item.type == 'public' and item.authorized
+  with_items: ssh_keys

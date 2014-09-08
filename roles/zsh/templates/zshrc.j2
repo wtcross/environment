@@ -27,10 +27,8 @@ source $ZSH/oh-my-zsh.sh
 ######################
 # User configuration #
 ######################
-{% if private_keys | length > 0 %}
 # Tell ssh-agent plugin to load all private keys
-zstyle :omz:plugins:ssh-agent identities {{ private_keys | join(' ') }}
-{% endif %}
+zstyle :omz:plugins:ssh-agent identities {% for ssh_key in ssh_keys %}{% if ssh_key.type == 'private' %}{{ ssh_key.name }} {% endif %}{% endfor %}
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 

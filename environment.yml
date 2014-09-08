@@ -15,6 +15,7 @@
 
   roles:
     - role: zsh
+      tags: [ 'zsh' ]
 
     - role: git
 
