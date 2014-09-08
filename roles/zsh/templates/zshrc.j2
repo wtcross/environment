@@ -38,7 +38,7 @@ export LANG={{ lang }}
 
 export CHROME_BIN=$(which chromium-browser)
 
-export EDITOR='vim'
+export EDITOR='{{ editor }}'
 
 {% if aliases | length > 0 %}# Aliases{% endif %}
 {% for alias in aliases %}

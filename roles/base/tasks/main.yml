@@ -10,8 +10,9 @@
     - screen
     - ufw
     - htop
-    - git
     - pass
+    - vim
+    - nano
 
 - name: Install required Python libraries.
   sudo: yes
