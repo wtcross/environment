@@ -32,3 +32,5 @@ lang: en_US.UTF-8
 aliases: []
 
 oh_my_zsh_repo: https://github.com/robbyrussell/oh-my-zsh.git
+
+editor: vim

@@ -1,0 +1,8 @@
+{% if git_user is defined %}
+[user]
+	name = {{ git_user.name }}
+	email = {{ git_user.email }}
+{% endif %}
+[core]
+	excludesfile = /home/{{ ansible_ssh_user }}/.gitignore_global
+	editor = {{ editor }}
