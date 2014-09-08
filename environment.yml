@@ -13,11 +13,6 @@
     - name: Load secure variables from S3.
       include_vars: vars/secure.yml
 
-    - name: Check to see if X is installed.
-      shell: which X
-      register: which_x
-      ignore_errors: yes
-
   roles:
     - role: zsh
       tags: [ 'zsh' ]
@@ -39,14 +34,11 @@
 
     - role: chromium
       tags: [ 'chromium' ]
-      when: which_x.rc == 0
 
     - role: sublime
       tags: [ 'sublime' ]
-      when: which_x.rc == 0
 
     - role: hipchat
       tags: [ 'hipchat' ]
-      when: which_x.rc == 0
 
 - include: cleanup.yml
