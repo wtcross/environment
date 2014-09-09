@@ -1,0 +1,11 @@
+{% for host in ssh_hosts %}
+Host {{ host.name }}
+    HostName {{ host.host_name }}
+    Port {{ host.port }}
+    User {{ host.user }}
+    IdentityFile ~/.ssh/{{ host.identity }}
+{% if host.forward_agent %}
+    ForwardAgent yes
+{% endif %}
+
+{% endfor %}

@@ -37,9 +37,7 @@
   with_items: ssh_keys
 
 - name: Ensure SSH config file is in place.
-  copy: >
-    src=config
-    dest=~/.ssh
+  template: src=config.j2 dest=~/.ssh/config group={{ ansible_ssh_user }} owner={{ ansible_ssh_user }}
 
 - name: Add authorized_keys.
   authorized_key: >
