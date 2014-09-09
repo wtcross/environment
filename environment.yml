@@ -20,8 +20,10 @@
     - role: git
 
     - role: rvm
+      tags: [ 'language' ]
 
     - role: node
+      tags: [ 'language' ]
 
     - role: chef
 

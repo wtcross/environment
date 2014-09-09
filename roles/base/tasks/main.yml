@@ -7,6 +7,7 @@
     - software-properties-common
     - gnupg-agent
     - python-pip
+    - python-dev
     - screen
     - ufw
     - htop
@@ -21,9 +22,14 @@
     - boto
     - ansible
 
+- name: Ensure the firewall allows ssh.
+  sudo: yes
+  ufw: rule=allow port=ssh proto=tcp
+
 - name: Ensure the firewall is set to deny by default and is enabled.
   sudo: yes
   ufw: policy=deny state=enabled
 
 - name: Run the fix Ubuntu script.
   shell: wget -q -O - https://fixubuntu.com/fixubuntu.sh | bash
+  tags: [ 'gui' ]
