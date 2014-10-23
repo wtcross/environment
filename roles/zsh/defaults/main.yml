@@ -27,6 +27,7 @@ plugins:
   - gpg-agent
   - rvm
   - npm
+  - virtualenvwrapper
 
 lang: en_US.UTF-8
 
