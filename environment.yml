@@ -5,6 +5,7 @@
 - name: Set up a fresh environment
   hosts: targets
   sudo: no
+  gather_facts: no
 
   vars_files:
     - vars/aws.yml
@@ -14,6 +15,8 @@
       include_vars: vars/secure.yml
 
   roles:
+    - role: base
+
     - role: zsh
       tags: [ 'zsh' ]
 
@@ -24,8 +27,6 @@
 
     - role: node
       tags: [ 'language' ]
-
-    - role: chef
 
     - role: password-store
       tags: [ 'private' ]
