@@ -3,6 +3,3 @@ python:
   - "2.7"
 install: pip install ansible
 script: ansible-playbook -i inventory environment.yml --skip-tags "private"
-env:
-  global:
-    secure: "Nf90ipF/2KqoWVaaB2NkiWICE4wH0uQv391I9axx4AkssNXZcsU337LYc0XIkKW4y5KUy/C4yGD9MVdJUISA8VVBIcHopXGLf4ar3M1QAoIf7pB+H6n/IzAPk6t8T2oQj2sbz/8/N3K1YNXuotimeSjamFJf3iPxL6mFZgrGblA="
