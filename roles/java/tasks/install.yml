@@ -1,0 +1,8 @@
+---
+- name: Ensure the Java APT repo is present.
+  sudo: yes
+  apt_repository: repo='ppa:webupd8team/java' state=present
+
+- name: Ensure Java 8 is installed.
+  sudo: yes
+  apt: name=oracle-java8-installer update_cache=yes state=present
