@@ -3,8 +3,8 @@
   template:
     src: zshrc.j2
     dest: ~/.zshrc
-    group: "{{ target_user }}"
-    owner: "{{ target_user }}"
+    group: "{{ ansible_ssh_user }}"
+    owner: "{{ ansible_ssh_user }}"
 
 - name: Copy environment script from S3.
   s3:
@@ -23,5 +23,5 @@
 - name: Ensure the users default shell is now zsh
   sudo: yes
   user:
-    name: "{{ target_user }}"
+    name: "{{ ansible_ssh_user }}"
     shell: "{{ zsh_path.stdout }}"
