@@ -1,47 +1,65 @@
 ---
 - name: Ensure the .ssh directory has correct permissions.
-  file: path=~/.ssh owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} mode=700
+  file:
+    path: ~/.ssh
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: u+rwx,go-rwx
+    state: directory
 
 - name: Ensure private keys in S3 are present.
-  s3: >
-    aws_access_key={{ aws_access_key }}
-    aws_secret_key={{ aws_secret_key }}
-    bucket={{ s3_bucket }}
-    object=/ssh/{{ item.name }}
-    dest=~/.ssh/{{ item.name }}
-    overwrite=no
-    mode=get
-  when: item.type == 'private'
-  with_items: ssh_keys
-
-- name: Ensure private keys in the .ssh directory have the correct permissions.
-  file: path=~/.ssh/{{ item.name }} owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} mode=600
+  s3:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    bucket: "{{ s3_bucket }}"
+    object: "/ssh/{{ item.name }}"
+    dest: "~/.ssh/{{ item.name }}"
+    overwrite: no
+    mode: get
   when: item.type == 'private'
   with_items: ssh_keys
 
 - name: Ensure public keys in S3 are present.
-  s3: >
-    aws_access_key={{ aws_access_key }}
-    aws_secret_key={{ aws_secret_key }}
-    bucket={{ s3_bucket }}
-    object=/ssh/{{ item.name }}
-    dest=~/.ssh/{{ item.name }}
-    overwrite=no
-    mode=get
-  when: item.type == 'public'
-  with_items: ssh_keys
-
-- name: Ensure public keys in the .ssh directory have the correct permissions.
-  file: path=~/.ssh/{{ item.name }} owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} mode=644
+  s3:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    bucket: "{{ s3_bucket }}"
+    object: "/ssh/{{ item.name }}"
+    dest: "~/.ssh/{{ item.name }}"
+    overwrite: no
+    mode: get
   when: item.type == 'public'
   with_items: ssh_keys
 
 - name: Ensure SSH config file is in place.
-  template: src=config.j2 dest=~/.ssh/config group={{ ansible_ssh_user }} owner={{ ansible_ssh_user }}
+  template:
+    src: config.j2
+    dest: ~/.ssh/config
+    group: "{{ target_user }}"
+    owner: "{{ target_user }}"
 
 - name: Add authorized_keys.
-  authorized_key: >
-    user="{{ ansible_ssh_user }}"
-    key="{{ lookup('file', '/home/' + ansible_ssh_user + '/.ssh/' + item.name) }}"
+  authorized_key:
+    user: "{{ target_user }}"
+    key: "{{ lookup('file', '/home/' + target_user + '/.ssh/' + item.name) }}"
   when: item.type == 'public' and item.authorized
+  with_items: ssh_keys
+
+- name: Ensure private keys in the .ssh directory have the correct permissions.
+  file:
+    path: "~/.ssh/{{ item.name }}"
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: u+rw,u-x,go-rwx
+  when: item.type == 'private'
+  with_items: ssh_keys
+
+
+- name: Ensure public keys in the .ssh directory have the correct permissions.
+  file:
+    path: "~/.ssh/{{ item.name }}"
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: u+rw,go+r,go-w,ugo-x
+  when: item.type == 'public'
   with_items: ssh_keys

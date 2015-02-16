@@ -1,7 +1,10 @@
 ---
 - name: Install base packages.
   sudo: yes
-  apt: name={{ item }} state=present update_cache=yes
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
   with_items:
     - build-essential
     - software-properties-common
@@ -10,26 +13,25 @@
     - python-dev
     - screen
     - ufw
+    - curl
     - htop
     - pass
     - vim
     - nano
     - irssi
 
-- name: Install required Python libraries.
-  sudo: yes
-  pip: name={{ item }} state=present
-  with_items:
-    - boto
-    - ansible
-
 - name: Ensure the firewall allows ssh.
   sudo: yes
-  ufw: rule=allow port=ssh proto=tcp
+  ufw:
+    rule: allow
+    port: ssh
+    proto: tcp
 
 - name: Ensure the firewall is set to deny by default and is enabled.
   sudo: yes
-  ufw: policy=deny state=enabled
+  ufw:
+    policy: deny
+    state: enabled
 
 - name: Run the fix Ubuntu script.
   shell: wget -q -O - https://fixubuntu.com/fixubuntu.sh | bash

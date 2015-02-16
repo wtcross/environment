@@ -4,5 +4,5 @@
 	email = {{ git_user.email }}
 {% endif %}
 [core]
-	excludesfile = /home/{{ ansible_ssh_user }}/.gitignore_global
+	excludesfile = /home/{{ target_user }}/.gitignore_global
 	editor = {{ editor }}

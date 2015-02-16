@@ -1,17 +1,20 @@
 ---
 - name: Make sure the npmrc directory exists.
-  file: path=~/.npmrcs state=directory owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
+  file:
+    path: ~/.npmrcs
+    state: directory
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
 
 - name: Copy all npmrc files from S3.
-  s3: >
-    aws_access_key={{ aws_access_key }}
-    aws_secret_key={{ aws_secret_key }}
-    bucket={{ s3_bucket }}
-    object=/npmrcs/{{ item }}
-    dest=~/.npmrcs/{{ item }}
-    overwrite=no
-    mode=get
+  s3:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    bucket: "{{ s3_bucket }}"
+    object: "/npmrcs/{{ item }}"
+    dest: "~/.npmrcs/{{ item }}"
+    overwrite: no
+    mode: get
   with_items:
     - default
-    - bwrnd
     - incubator

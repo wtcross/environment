@@ -1,9 +1,12 @@
 ---
 - name: Ensure zsh is installed.
   sudo: yes
-  apt: name=zsh state=present update_cache=yes
+  apt:
+    name: zsh
+    state: present
 
 - name: Ensure the oh-my-zsh repo is cloned into ~/.oh-my-zsh
-  git: repo={{ oh_my_zsh_repo }}
-       dest=~/.oh-my-zsh
-       depth=1
+  git:
+    repo: "{{ oh_my_zsh_repo }}"
+    dest: ~/.oh-my-zsh
+    depth: 1

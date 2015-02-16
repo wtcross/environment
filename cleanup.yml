@@ -6,5 +6,7 @@
   sudo: no
 
   tasks:
-    - name: Ensure secure variable file is deleted.
-      file: path=vars/secure.yml state=absent
+    - name: Ensure secret variable file is deleted.
+      file:
+        path: vars/secrets.yml
+        state: absent

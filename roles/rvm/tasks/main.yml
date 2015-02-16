@@ -1,6 +1,9 @@
 ---
+- name: Add the RVM GPG key.
+  shell: gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+
 - name: Make sure RVM is installed.
-  shell: "curl -sSL https://get.rvm.io | bash"
+  shell: \curl -sSL https://get.rvm.io | bash
 
 - name: Fetch each ruby version.
   shell: rvm install {{ item }}

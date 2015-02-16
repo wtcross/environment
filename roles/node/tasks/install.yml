@@ -1,15 +1,22 @@
 ---
 - name: Add the NodeJS Apt repo.
   sudo: yes
-  apt_repository: repo='ppa:chris-lea/node.js' state=present
+  apt_repository:
+    repo: ppa:chris-lea/node.js
+    state: present
 
 - name: Install NodeJS.
   sudo: yes
-  apt: name=nodejs state=present
+  apt:
+    name: nodejs
+    state: present
 
 - name: Ensure required global NPM packages are installed.
   sudo: yes
-  npm: name={{ item }} global=yes state=present
+  npm:
+    name: "{{ item }}"
+    global: yes
+    state: present
   with_items:
     - npmrc
     - grunt
