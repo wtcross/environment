@@ -9,7 +9,6 @@
 
   vars_files:
     - vars/aws.yml
-    - vars/environment.yml
 
   roles:
     - role: base
