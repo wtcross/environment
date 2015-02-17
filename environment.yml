@@ -1,6 +1,6 @@
 ---
 - include: bootstrap.yml
-- include: secure-variables.yml
+- include: secrets.yml
 
 - name: Set up a fresh environment
   hosts: targets
@@ -9,10 +9,6 @@
 
   vars_files:
     - vars/aws.yml
-
-  pre_tasks:
-    - name: Load secure variables from S3.
-      include_vars: vars/secure.yml
 
   roles:
     - role: base

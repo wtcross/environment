@@ -4,9 +4,8 @@
   connection: local
   sudo: yes
 
-  vars_files:
-    - vars/aws.yml
-
   tasks:
     - name: Ensure that boto is installed to work with AWS
-      pip: name=boto state=present
+      pip:
+        name: boto
+        state: present

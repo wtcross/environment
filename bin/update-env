@@ -1,0 +1,3 @@
+#!/bin/bash -ev
+
+ansible-playbook -i inventory environment.yml --ask-sudo-pass

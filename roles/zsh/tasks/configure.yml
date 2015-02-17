@@ -1,16 +1,20 @@
 ---
 - name: Ensure .zshrc is in place.
-  template: src=zshrc.j2 dest=~/.zshrc group={{ ansible_ssh_user }} owner={{ ansible_ssh_user }}
+  template:
+    src: zshrc.j2
+    dest: ~/.zshrc
+    group: "{{ ansible_ssh_user }}"
+    owner: "{{ ansible_ssh_user }}"
 
 - name: Copy environment script from S3.
-  s3: >
-    aws_access_key={{ aws_access_key }}
-    aws_secret_key={{ aws_secret_key }}
-    bucket={{ s3_bucket }}
-    object=/scripts/environment.sh
-    dest=~/.environment.sh
-    overwrite=yes
-    mode=get
+  s3:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    bucket: "{{ environment_s3_bucket }}"
+    object: /scripts/environment.sh
+    dest: ~/.environment.sh
+    overwrite: yes
+    mode: get
 
 - name: Get path to ZSH
   shell: which zsh
@@ -18,4 +22,6 @@
 
 - name: Ensure the users default shell is now zsh
   sudo: yes
-  user: name={{ ansible_ssh_user }} shell={{ zsh_path.stdout }}
+  user:
+    name: "{{ ansible_ssh_user }}"
+    shell: "{{ zsh_path.stdout }}"
