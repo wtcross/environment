@@ -1,3 +1,10 @@
-#!/bin/bash -ev
+#!/bin/bash
 
+PROJECT_PATH=$(dirname $(dirname $(readlink -f $0)))
+
+pushd $( dirname ${0} ) > /dev/null
+
+cd ${PROJECT_PATH}
 ansible-playbook -i inventory environment.yml --ask-sudo-pass
+
+popd > /dev/null
