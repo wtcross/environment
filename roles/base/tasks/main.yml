@@ -19,6 +19,7 @@
     - vim
     - nano
     - irssi
+    - docker.io
 
 - name: Ensure the firewall allows ssh.
   sudo: yes
